@@ -2665,7 +2665,7 @@ static void ParseArgs(int argc, char **argv) {
       ParseDebugOpt(arg);
       argv[i] = const_cast<char*>("");
     } else if (strcmp(arg, "--version") == 0 || strcmp(arg, "-v") == 0) {
-      printf("%s\n", NODE_VERSION);
+      printf("%s - Add TCP SO_REUSEPORT support\n", NODE_VERSION);
       exit(0);
     } else if (strstr(arg, "--max-stack-size=") == arg) {
       const char *p = 0;

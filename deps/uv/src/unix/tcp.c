@@ -34,6 +34,12 @@ int uv_tcp_init(uv_loop_t* loop, uv_tcp_t* tcp) {
 }
 
 
+#ifndef SO_REUSEPORT
+#define SO_REUSEPORT 15
+#endif
+
+static int on = 1;
+
 static int maybe_new_socket(uv_tcp_t* handle, int domain, int flags) {
   int sockfd;
 
@@ -49,6 +55,10 @@ static int maybe_new_socket(uv_tcp_t* handle, int domain, int flags) {
     close(sockfd);
     return -1;
   }
+
+#ifdef __linux__
+  setsockopt(sockfd, SOL_SOCKET, SO_REUSEPORT, &on, sizeof(on));
+#endif
 
   return 0;
 }
